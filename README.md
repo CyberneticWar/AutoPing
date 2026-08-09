@@ -6,8 +6,8 @@
 </p>
 
 <p align="center">
-Assistente WhatsApp per concessionarie.<br />
-Gestisce <strong>tagliando</strong>, <strong>prova su strada</strong> e <strong>preventivo</strong>, e avvisa subito chi deve richiamare.
+  <strong>Centralino WhatsApp automatico.</strong><br />
+  Tagliando, prova su strada e preventivo — con alert a chi deve richiamare.
 </p>
 
 <p align="center">
@@ -34,4 +34,4 @@ Per il dettaglio tecnico: [vault/](vault/) — conversazione, routing staff, hos
 
 ---
 
-**AutoPing** — hub WhatsApp per concessionarie
+**AutoPing** — Centralino WhatsApp automatico.
