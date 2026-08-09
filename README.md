@@ -1,44 +1,34 @@
 # AutoPing
 
-### Il WhatsApp che lavora per la concessionaria
+**Il cliente scrive. Voi chiudete.**
 
-Il cliente scrive per un **tagliando**, una **prova su strada** o un **preventivo**.  
-AutoPing guida la conversazione e avvisa subito chi deve richiamare.
-
-<br />
+Assistente WhatsApp per concessionarie: gestisce **tagliando**, **prova su strada** e **preventivo**, e avvisa subito chi deve richiamare.
 
 <p align="center">
-  <a href="https://cyberneticwar.github.io/AutoPing/" target="_blank" rel="noopener noreferrer">
-    <strong>▶ Apri la presentazione</strong>
-  </a>
+  <img src="docs/assets/autoping-hero.gif" alt="AutoPing — demo chat WhatsApp" width="900" />
+</p>
+
+<p align="center">
+  <a href="https://cyberneticwar.github.io/AutoPing/" target="_blank" rel="noopener noreferrer"><strong>Apri la presentazione →</strong></a>
 </p>
 
 ---
 
-## In due parole
+## Perché AutoPing
 
-| | |
-|---|---|
-| **Per il cliente** | Menu chiaro, tono formale, conferma immediata |
-| **Per il team** | Alert a officina o commerciale con i dati già pronti |
-| **Per il salone** | Meno richieste perse, più richiami puntuali |
+- **Risposta subito** — il cliente sa che la richiesta è presa in carico  
+- **Dati già pronti** — targa, fascia, linea: meno andirivieni in chat  
+- **La persona giusta** — officina o commerciale ricevono solo ciò che compete loro  
 
-## Cosa gestisce
+## Come funziona
 
-| Percorso | Cliente | Team |
-|----------|---------|------|
-| **Tagliando** | Targa e auto sostitutiva | Officina |
-| **Prova su strada** | Fascia oraria | Commerciale |
-| **Preventivo** | Linea di interesse | Referente di linea |
+1. **Il cliente scrive** sul WhatsApp della concessionaria  
+2. **AutoPing guida** il percorso e raccoglie i dati  
+3. **Il team riceve un alert** e richiama con tutto già chiaro  
 
 ## Documentazione
 
-| Doc | Contenuto |
-|-----|-----------|
-| [Conversazione](vault/06_Conversation_Tagliando.md) | Menu e flussi |
-| [Routing staff](vault/07_Staff_Routing_Draft.md) | Destinatari per ruolo |
-| [Hosting](vault/08_Hosting_Webhook.md) | Webhook e URL pubblico |
-| [Architecture](vault/01_Architecture.md) | Stack di riferimento |
+Per il dettaglio tecnico: [vault/](vault/) — conversazione, routing staff, hosting e architettura.
 
 ---
 

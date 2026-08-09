@@ -311,17 +311,18 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.85rem;
-      max-width: 920px;
+      max-width: 980px;
       width: 100%;
       margin-top: 1.4rem;
     }
     .stat {
-      padding: 1.2rem 1.1rem;
+      padding: 1.35rem 1.2rem 1.45rem;
       border-radius: 18px;
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.025);
       position: relative;
       overflow: hidden;
+      min-height: 9.5rem;
     }
     .stat::after {
       content: "";
@@ -331,18 +332,21 @@
       height: 120px;
       background: radial-gradient(circle, rgba(45, 255, 122, 0.18), transparent 70%);
     }
-    .stat .num {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      color: var(--signal);
-      line-height: 1;
-      margin-bottom: 0.45rem;
+    .stat strong {
+      display: block;
+      position: relative;
+      z-index: 1;
+      font-size: 1.05rem;
+      margin-bottom: 0.55rem;
+      color: var(--ink);
     }
     .stat p {
       margin: 0;
+      position: relative;
+      z-index: 1;
       color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.4;
+      font-size: 0.92rem;
+      line-height: 1.45;
     }
 
     .paths {
@@ -402,22 +406,31 @@
 
     .split {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 1.8rem;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.95fr);
+      gap: clamp(1.5rem, 3vw, 2.75rem);
       width: 100%;
-      max-width: 1040px;
+      max-width: 1080px;
       align-items: center;
+    }
+    .split .reveal {
+      min-width: 0;
+      max-width: 28rem;
+    }
+    .split h2 {
+      max-width: 12ch;
     }
     .route {
       border-radius: 22px;
       border: 1px solid var(--line);
       overflow: hidden;
       background: rgba(255, 255, 255, 0.025);
+      min-width: 0;
+      width: 100%;
     }
     .route-row {
       display: grid;
-      grid-template-columns: 1.1fr 1fr auto;
-      gap: 0.8rem;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+      gap: 0.75rem;
       align-items: center;
       padding: 1rem 1.15rem;
       border-bottom: 1px solid var(--line);
@@ -432,12 +445,21 @@
     .slide.enter .route-row:nth-child(2) { animation-delay: 0.38s; }
     .slide.enter .route-row:nth-child(3) { animation-delay: 0.51s; }
     .slide.enter .route-row:nth-child(4) { animation-delay: 0.64s; }
-    .route-row span { color: var(--muted); font-size: 0.92rem; }
-    .route-row strong { font-size: 0.95rem; }
+    .route-row span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
+    }
+    .route-row strong {
+      font-size: 0.95rem;
+      justify-self: start;
+    }
     .pill {
       justify-self: end;
+      white-space: nowrap;
       font-size: 0.68rem;
       font-weight: 700;
+      font-style: normal;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--signal);
@@ -543,10 +565,11 @@
       to { transform: rotate(360deg); }
     }
 
-    @media (max-width: 920px) {
+    @media (max-width: 1100px) {
       .hero, .paths, .split, .stats { grid-template-columns: 1fr; }
       .phone-wrap { justify-self: start; width: min(100%, 320px); }
       h1, h2 { max-width: 16ch; }
+      .split .reveal { max-width: none; }
       .phone-screen { min-height: 390px; }
     }
   </style>
@@ -603,7 +626,7 @@
     <section class="slide" data-title="Problema">
       <div class="reveal">
         <p class="eyebrow">Il costo del silenzio</p>
-        <h2>Su WhatsApp, <em>chi risponde prima</em> tiene il cliente.</h2>
+        <h2>Il silenzio sulla chat <em>costa clienti</em>.</h2>
         <p class="lede">
           Se la richiesta resta tra chat personali e “te lo passo dopo”,
           la chiamata successiva spesso è a un’altra concessionaria.
@@ -611,16 +634,16 @@
       </div>
       <div class="stats">
         <article class="stat">
-          <div class="num" data-count="3">0</div>
-          <p>minuti: la soglia in cui un lead inizia a raffreddarsi</p>
+          <strong>La prima risposta</strong>
+          <p>Su WhatsApp, chi risponde per primo tiene il cliente.</p>
         </article>
         <article class="stat">
-          <div class="num" data-count="24">0</div>
-          <p>ore: fuori orario senza risposta = opportunità perse</p>
+          <strong>Salone chiuso, richiesta aperta</strong>
+          <p>Il messaggio non si perde: al mattino è già pronto da richiamare.</p>
         </article>
         <article class="stat">
-          <div class="num" data-count="1">0</div>
-          <p>responsabile chiaro batte dieci notifiche sparse</p>
+          <strong>Un solo destinatario</strong>
+          <p>L’alert arriva a chi deve gestire la pratica, non a tutto il team.</p>
         </article>
       </div>
     </section>
@@ -659,7 +682,7 @@
       <div class="split">
         <div class="reveal">
           <p class="eyebrow">Per il team</p>
-          <h2>Ogni lead ha <em>un padrone</em>.</h2>
+          <h2>Ogni richiesta ha <em>un responsabile</em>.</h2>
           <p class="lede">
             AutoPing avvisa chi deve agire: dati del cliente, contesto della richiesta,
             link diretto per rispondere su WhatsApp.
@@ -678,7 +701,7 @@
     <section class="slide" data-title="Chiusura">
       <div class="reveal">
         <p class="eyebrow">Il passo successivo</p>
-        <h1>Fate parlare il salone. <em>Anche quando siete in prova.</em></h1>
+        <h1>Fate parlare il salone. <em>Anche quando siete con un cliente.</em></h1>
         <p class="lede">
           Si collega al vostro numero WhatsApp Business.
           Si impostano i destinatari. Da quel momento ogni messaggio
