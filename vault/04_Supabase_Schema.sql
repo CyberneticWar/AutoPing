@@ -61,4 +61,3 @@ create table if not exists notify_failures (
 
 create index if not exists notify_failures_created_idx
   on notify_failures (created_at desc);
-

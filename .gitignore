@@ -1,12 +1,18 @@
-# Local / secrets (app code not published in this docs repo)
+# AutoPing — ignore local runtime and secrets
+
+# Secrets / env
 .env
 .env.example
+
+# Application runtime (not part of the public product showcase)
 app/
 scripts/
 requirements.txt
 data/
 logs/
 .venv/
+
+# Tooling / OS
 __pycache__/
 *.py[cod]
 *.egg-info/
