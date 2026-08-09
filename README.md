@@ -1,19 +1,13 @@
 # AutoPing
 
-<!-- GitHub-only sizing: light/dark variants, compact width -->
 <p align="center">
   <img src="docs/assets/logo-autoping-github-light.png#gh-light-mode-only" alt="AutoPing" width="260" />
   <img src="docs/assets/logo-autoping-github-dark.png#gh-dark-mode-only" alt="AutoPing" width="260" />
 </p>
 
-<p align="center"><strong>Il cliente scrive. Voi chiudete.</strong></p>
-
 <p align="center">
-Assistente WhatsApp per concessionarie: gestisce <strong>tagliando</strong>, <strong>prova su strada</strong> e <strong>preventivo</strong>, e avvisa subito chi deve richiamare.
-</p>
-
-<p align="center">
-  <img src="docs/assets/autoping-hero.gif" alt="AutoPing — demo chat WhatsApp" width="720" />
+Assistente WhatsApp per concessionarie.<br />
+Gestisce <strong>tagliando</strong>, <strong>prova su strada</strong> e <strong>preventivo</strong>, e avvisa subito chi deve richiamare.
 </p>
 
 <p align="center">
