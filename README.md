@@ -7,15 +7,7 @@ AutoPing lo guida in un percorso semplice e avvisa subito chi deve richiamare �
 
 ## Presentazione
 
-Per vederla come slide (non come codice):
-
-**[Apri la presentazione](https://cyberneticwar.github.io/AutoPing/presentazione-autoping.html)**
-
-In alternativa, in locale: apri il file `docs/presentazione-autoping.html` direttamente nel browser (doppio clic), oppure `http://127.0.0.1:8765/presentazione-autoping.html` se stai servendo la cartella `docs`.
-
-> Su GitHub, il link al file `.html` mostra il **codice sorgente**. Per le slide serve GitHub Pages (link sopra) oppure l’apertura locale.
-
-Navigazione slide: frecce o spazio · clic sinistra/destra · Esc torna all’inizio.
+<a href="https://cyberneticwar.github.io/AutoPing/" target="_blank" rel="noopener noreferrer"><strong>Apri la presentazione →</strong></a>
 
 ## A chi è rivolto
 
@@ -28,8 +20,6 @@ Concessionarie e saloni che vogliono un unico numero WhatsApp per le richieste q
 | **Tagliando** | Indica targa e se serve auto sostitutiva | L’officina riceve i dati pronti |
 | **Prova su strada** | Sceglie una fascia oraria | Il commerciale conferma l’appuntamento |
 | **Preventivo** | Indica la linea di interesse | Arriva al referente di quella linea |
-
-Dopo ogni richiesta: *Posso aiutarla con altro?*
 
 ## Perché funziona in salone
 

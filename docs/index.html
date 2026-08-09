@@ -3,364 +3,509 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AutoPing — Hub WhatsApp per concessionarie</title>
+  <title>AutoPing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink: #14201c;
-      --muted: #4a5c55;
-      --panel: #ffffff;
-      --line: #d5d2c8;
-      --accent: #0f6b4c;
-      --accent-soft: #e3f0ea;
-      --slide-pad: clamp(2rem, 5vw, 4.5rem);
+      --bg: #0b0f0e;
+      --bg-2: #121a17;
+      --ink: #f4f1ea;
+      --muted: #9aa8a1;
+      --line: rgba(244, 241, 234, 0.12);
+      --signal: #25d366;
+      --signal-dim: rgba(37, 211, 102, 0.14);
+      --warm: #e8c48a;
+      --pad: clamp(1.5rem, 4.5vw, 4rem);
     }
 
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
       height: 100%;
-      background: var(--ink);
+      background: var(--bg);
       color: var(--ink);
-      font-family: "Manrope", system-ui, sans-serif;
+      font-family: "Sora", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
     .deck {
       height: 100%;
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
     }
 
     .slide {
-      display: none;
-      height: 100%;
-      padding: var(--slide-pad);
-      background:
-        radial-gradient(1200px 600px at 100% -10%, #1f3d34 0%, transparent 55%),
-        linear-gradient(160deg, #f7f5ef 0%, #ebe7de 100%);
+      position: absolute;
+      inset: 0;
+      display: flex;
       flex-direction: column;
       justify-content: center;
-      position: relative;
+      padding: var(--pad);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(18px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      background:
+        radial-gradient(900px 520px at 85% 10%, rgba(37, 211, 102, 0.16), transparent 55%),
+        radial-gradient(700px 480px at 0% 100%, rgba(232, 196, 138, 0.08), transparent 50%),
+        linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
     }
-    .slide.active { display: flex; }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      z-index: 1;
+    }
 
-    .slide::before {
+    .slide::after {
       content: "";
       position: absolute;
-      inset: 0 auto 0 0;
-      width: 6px;
-      background: var(--accent);
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.35;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    .brand {
+      position: absolute;
+      top: var(--pad);
+      left: var(--pad);
+      z-index: 2;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .brand em {
+      font-style: normal;
+      color: var(--signal);
+    }
+
+    .progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--signal);
+      width: 0;
+      z-index: 5;
+      transition: width 0.35s ease;
+    }
+
+    .dots {
+      position: absolute;
+      right: var(--pad);
+      bottom: var(--pad);
+      z-index: 3;
+      display: flex;
+      gap: 0.45rem;
+    }
+    .dots button {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      border: 0;
+      padding: 0;
+      background: rgba(244, 241, 234, 0.25);
+      cursor: pointer;
+      transition: width 0.25s ease, background 0.25s ease;
+    }
+    .dots button.on {
+      width: 22px;
+      background: var(--signal);
+    }
+
+    .hint {
+      position: absolute;
+      left: var(--pad);
+      bottom: var(--pad);
+      z-index: 3;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
     }
 
     .eyebrow {
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: var(--accent);
       margin: 0 0 1rem;
+      color: var(--signal);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
     }
 
     h1, h2 {
-      font-family: "Instrument Serif", Georgia, serif;
-      font-weight: 400;
-      line-height: 1.08;
-      margin: 0 0 1rem;
-      max-width: 18ch;
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      margin: 0 0 1.1rem;
+      max-width: 14ch;
     }
-    h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); }
-    h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); max-width: 22ch; }
+    h1 { font-size: clamp(2.8rem, 7vw, 5.2rem); }
+    h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); max-width: 16ch; }
 
     .lede {
-      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      margin: 0;
+      max-width: 34rem;
       color: var(--muted);
-      max-width: 42rem;
+      font-size: clamp(1.05rem, 1.7vw, 1.25rem);
       line-height: 1.55;
-      margin: 0 0 1.75rem;
+      font-weight: 400;
     }
 
-    .brand-mark {
-      font-family: "Instrument Serif", Georgia, serif;
-      font-size: 1.35rem;
-      margin-bottom: 2.5rem;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+      align-items: center;
+      max-width: 1100px;
+      width: 100%;
+      margin-top: 2.5rem;
     }
-    .brand-mark span { color: #7dceae; }
 
-    .grid-3 {
+    .phone {
+      justify-self: end;
+      width: min(100%, 320px);
+      border-radius: 28px;
+      padding: 0.7rem;
+      background: linear-gradient(160deg, #1c2622, #0e1311);
+      border: 1px solid var(--line);
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      animation: floatIn 0.8s ease both;
+    }
+    .phone-screen {
+      border-radius: 22px;
+      background: #0a100e;
+      padding: 1rem 0.9rem 1.15rem;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .phone-top {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 0.25rem;
+    }
+    .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--signal-dim);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+    }
+    .phone-top strong {
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .phone-top span {
+      display: block;
+      font-size: 0.68rem;
+      color: var(--signal);
+    }
+    .bubble {
+      max-width: 88%;
+      padding: 0.7rem 0.85rem;
+      border-radius: 14px;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      animation: rise 0.55s ease both;
+    }
+    .bubble.in {
+      align-self: flex-start;
+      background: #18211e;
+      border: 1px solid var(--line);
+      color: #dce4df;
+    }
+    .bubble.out {
+      align-self: flex-end;
+      background: #1a3d2a;
+      border: 1px solid rgba(37, 211, 102, 0.28);
+      color: #eaf8ef;
+    }
+    .bubble.delay-1 { animation-delay: 0.15s; }
+    .bubble.delay-2 { animation-delay: 0.35s; }
+    .bubble.delay-3 { animation-delay: 0.55s; }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+    .chip {
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: var(--signal);
+      border-radius: 999px;
+      padding: 0.28rem 0.65rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .paths {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
-      max-width: 960px;
+      max-width: 980px;
+      width: 100%;
+      margin-top: 0.5rem;
     }
-    .card {
-      background: var(--panel);
+    .path {
+      position: relative;
+      padding: 1.35rem 1.25rem 1.4rem;
       border: 1px solid var(--line);
-      border-radius: 2px;
-      padding: 1.25rem 1.35rem;
-      min-height: 9.5rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      overflow: hidden;
+      transition: border-color 0.25s ease, transform 0.25s ease;
     }
-    .card strong {
+    .path:hover {
+      border-color: rgba(37, 211, 102, 0.45);
+      transform: translateY(-2px);
+    }
+    .path::before {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--signal), transparent);
+      opacity: 0.7;
+    }
+    .path .n {
+      font-family: "Fraunces", Georgia, serif;
+      color: var(--warm);
+      font-size: 1.5rem;
+      margin-bottom: 0.55rem;
+    }
+    .path strong {
       display: block;
       font-size: 1.05rem;
       margin-bottom: 0.45rem;
     }
-    .card p {
+    .path p {
       margin: 0;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.45;
     }
-    .card .n {
-      font-family: "Instrument Serif", Georgia, serif;
-      font-size: 1.75rem;
-      color: var(--accent);
-      margin-bottom: 0.35rem;
-    }
 
-    ul.clean {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      max-width: 42rem;
-    }
-    ul.clean li {
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--line);
-      font-size: 1.05rem;
-      line-height: 1.45;
-    }
-    ul.clean li:first-child { border-top: 1px solid var(--line); }
-    ul.clean b { color: var(--ink); }
-
-    .two-col {
+    .split {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 2rem;
-      align-items: start;
-      max-width: 980px;
-    }
-    .panel {
-      background: var(--accent-soft);
-      border: 1px solid #c5ddd2;
-      padding: 1.35rem 1.5rem;
-      border-radius: 2px;
-    }
-    .panel h3 {
-      margin: 0 0 0.75rem;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    .panel p, .panel li {
-      margin: 0;
-      color: var(--ink);
-      line-height: 1.5;
-      font-size: 0.98rem;
-    }
-    .panel ul { margin: 0; padding-left: 1.1rem; }
-    .panel li + li { margin-top: 0.4rem; }
-
-    table.route {
+      max-width: 1000px;
       width: 100%;
-      max-width: 820px;
-      border-collapse: collapse;
-      background: var(--panel);
-      border: 1px solid var(--line);
+      align-items: start;
     }
-    table.route th, table.route td {
-      text-align: left;
-      padding: 0.85rem 1rem;
+    .list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .list li {
+      display: grid;
+      grid-template-columns: 1.6rem 1fr;
+      gap: 0.75rem;
+      padding: 0.95rem 0;
       border-bottom: 1px solid var(--line);
-      font-size: 0.98rem;
+      font-size: 1.02rem;
+      line-height: 1.45;
+      color: #d7ddd9;
     }
-    table.route th {
-      background: var(--accent-soft);
-      font-weight: 600;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
+    .list li:first-child { border-top: 1px solid var(--line); }
+    .list b { color: var(--ink); font-weight: 600; }
+    .mark {
+      width: 1.35rem;
+      height: 1.35rem;
+      border-radius: 50%;
+      background: var(--signal-dim);
+      color: var(--signal);
+      display: grid;
+      place-items: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 0.15rem;
     }
-    table.route tr:last-child td { border-bottom: 0; }
 
-    .footnote {
-      position: absolute;
-      left: var(--slide-pad);
-      right: var(--slide-pad);
-      bottom: 1.4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--muted);
-      font-size: 0.8rem;
+    .route-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.02);
     }
-    .nav-hint { opacity: 0.75; }
-
-    .dark {
-      background:
-        radial-gradient(900px 500px at 0% 0%, #1b4a3a 0%, transparent 50%),
-        linear-gradient(145deg, #101816 0%, #1a2420 100%);
-      color: #f3f1eb;
+    .route-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem 1.15rem;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.95rem;
     }
-    .dark::before { background: #3d9a74; }
-    .dark .eyebrow { color: #7dceae; }
-    .dark .lede, .dark .footnote { color: #a8b5af; }
-    .dark h1, .dark h2 { color: #f7f5ef; }
+    .route-row:last-child { border-bottom: 0; }
+    .route-row span { color: var(--muted); }
+    .route-row strong { color: var(--ink); font-weight: 600; }
 
-    @media (max-width: 860px) {
-      .grid-3, .two-col { grid-template-columns: 1fr; }
-      .card { min-height: 0; }
+    .cta-line {
+      margin-top: 1.75rem;
+      color: var(--warm);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid, .paths, .split { grid-template-columns: 1fr; }
+      .phone { justify-self: start; width: min(100%, 300px); margin-top: 0.5rem; }
+      h1, h2 { max-width: 18ch; }
+      .brand { font-size: 1.15rem; }
     }
   </style>
 </head>
 <body>
+  <div class="progress" id="progress"></div>
+  <div class="brand">Auto<em>Ping</em></div>
   <div class="deck" id="deck">
 
-    <section class="slide dark active" data-title="Copertina">
-      <p class="brand-mark">Auto<span>Ping</span></p>
-      <p class="eyebrow">WhatsApp per il salone</p>
-      <h1>Il cliente scrive. La richiesta arriva a chi di dovere.</h1>
-      <p class="lede">
-        AutoPing è l’assistente WhatsApp della concessionaria:
-        raccoglie tagliando, prova su strada e preventivo in percorsi semplici,
-        e avvisa subito la persona giusta in officina o in commerciale.
-      </p>
-      <div class="footnote">
-        <span>Hub WhatsApp per concessionarie</span>
-        <span class="nav-hint">← → o spazio per navigare</span>
+    <section class="slide active" data-title="Copertina">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">WhatsApp per concessionarie</p>
+          <h1>Il cliente scrive. Il salone risponde.</h1>
+          <p class="lede">
+            AutoPing gestisce tagliando, prova su strada e preventivo su WhatsApp:
+            percorsi chiari per il cliente, alert immediati a chi deve richiamare.
+          </p>
+        </div>
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen">
+            <div class="phone-top">
+              <div class="avatar"></div>
+              <div>
+                <strong>AutoPing</strong>
+                <span>online</span>
+              </div>
+            </div>
+            <div class="bubble in delay-1">Buongiorno, vorrei fissare un tagliando</div>
+            <div class="bubble out delay-2">
+              Buongiorno, come posso aiutarla?
+              <div class="chips">
+                <span class="chip">Tagliando</span>
+                <span class="chip">Prova</span>
+                <span class="chip">Preventivo</span>
+              </div>
+            </div>
+            <div class="bubble in delay-3">Tagliando · targa AB123CD</div>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <section class="slide" data-title="Perché">
-      <p class="eyebrow">Perché serve</p>
-      <h2>WhatsApp è già dove stanno i clienti</h2>
-      <p class="lede">
-        Chiedono un tagliando, una prova, un prezzo. Se la risposta arriva tardi
-        o si perde tra chat e appunti, la chiamata passa altrove.
-      </p>
-      <ul class="clean">
-        <li><b>Risposta immediata</b> — il cliente sa subito che la richiesta è presa in carico.</li>
-        <li><b>Ordine interno</b> — officina e commerciale ricevono solo ciò che compete loro.</li>
-        <li><b>Anche fuori orario</b> — orari chiari e richiesta comunque registrata.</li>
-      </ul>
-      <div class="footnote"><span>AutoPing</span><span></span></div>
-    </section>
-
-    <section class="slide" data-title="Cosa fa">
-      <p class="eyebrow">Tre percorsi</p>
-      <h2>Tutto ciò che serve, in un solo numero</h2>
-      <p class="lede">
-        Il cliente sceglie da un menu chiaro, in tono formale e professionale.
-        Ogni passaggio è guidato: domande semplici, conferma finale.
-      </p>
-      <div class="grid-3">
-        <article class="card">
-          <div class="n">01</div>
-          <strong>Tagliando</strong>
-          <p>Targa, auto sostitutiva, conferma. L’officina riceve i dati pronti per richiamare.</p>
-        </article>
-        <article class="card">
-          <div class="n">02</div>
-          <strong>Prova su strada</strong>
-          <p>Fascia oraria preferita e conferma. Il commerciale chiude l’appuntamento.</p>
-        </article>
-        <article class="card">
-          <div class="n">03</div>
-          <strong>Preventivo</strong>
-          <p>Scelta della linea (es. nuova / altra marca / usato). Arriva al referente giusto.</p>
-        </article>
-      </div>
-      <div class="footnote"><span>AutoPing</span><span></span></div>
-    </section>
-
-    <section class="slide" data-title="Esperienza">
-      <p class="eyebrow">Esperienza cliente</p>
-      <h2>Dal primo messaggio alla conferma, senza attrito</h2>
-      <div class="two-col">
-        <ul class="clean">
-          <li><b>Benvenuto e menu</b> — Tagliando, Prova su strada, Preventivo.</li>
-          <li><b>Domande mirate</b> — solo ciò che serve per lavorare la richiesta.</li>
-          <li><b>Conferma chiara</b> — il cliente sa cosa succede dopo e chi lo richiamerà.</li>
-          <li><b>Serve una persona?</b> — può chiedere l’operatore in qualsiasi momento.</li>
-        </ul>
-        <aside class="panel">
-          <h3>In pratica</h3>
-          <ul>
-            <li>Funziona 24/7 con messaggi fuori orario</li>
-            <li>Dopo ogni richiesta: «Posso aiutarla con altro?»</li>
-            <li>Copy professionale, tono Lei</li>
-          </ul>
-        </aside>
-      </div>
-      <div class="footnote"><span>AutoPing</span><span></span></div>
-    </section>
-
-    <section class="slide" data-title="Squadra">
-      <p class="eyebrow">Per il team</p>
-      <h2>Ogni richiesta trova il suo responsabile</h2>
-      <p class="lede">
-        AutoPing indirizza automaticamente la notifica a chi deve agire:
-        un messaggio chiaro, con i dati del cliente e un link per rispondere su WhatsApp.
-      </p>
-      <table class="route">
-        <thead>
-          <tr><th>Richiesta</th><th>Va a</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Tagliando</td><td>Officina</td></tr>
-          <tr><td>Prova su strada</td><td>Commerciale</td></tr>
-          <tr><td>Preventivo per linea</td><td>Referente di quella linea</td></tr>
-          <tr><td>Richiesta operatore</td><td>Commerciale di riferimento</td></tr>
-        </tbody>
-      </table>
-      <div class="footnote"><span>AutoPing</span><span></span></div>
     </section>
 
     <section class="slide" data-title="Valore">
       <p class="eyebrow">In salone</p>
-      <h2>Meno richieste perse. Più richiami puntuali.</h2>
-      <ul class="clean">
-        <li><b>Primo contatto sempre coperto</b> — anche quando il team è in prova o in officina.</li>
-        <li><b>Dati già pronti</b> — targa, fascia, linea: meno andirivieni in chat.</li>
-        <li><b>Responsabilità chiara</b> — chi riceve la notifica sa che è il suo turno di richiamare.</li>
-        <li><b>Immagine curata</b> — messaggi coerenti con il livello del salone.</li>
+      <h2>Ogni minuto conta. Ogni richiesta ha un responsabile.</h2>
+      <ul class="list" style="max-width:42rem;margin-top:0.5rem">
+        <li><span class="mark">1</span><span><b>Risposta subito</b> — il cliente sa che la richiesta è presa in carico.</span></li>
+        <li><span class="mark">2</span><span><b>Dati già pronti</b> — targa, fascia, linea: meno messaggi avanti e indietro.</span></li>
+        <li><span class="mark">3</span><span><b>La persona giusta</b> — officina o commerciale ricevono solo ciò che compete loro.</span></li>
       </ul>
-      <div class="footnote"><span>AutoPing</span><span></span></div>
     </section>
 
-    <section class="slide dark" data-title="Chiusura">
-      <p class="eyebrow">Prossimo passo</p>
-      <h1>Un numero WhatsApp. Tre servizi. Zero richieste lasciate a metà.</h1>
-      <p class="lede">
-        Si configura sul numero della concessionaria, con i destinatari di officina e commerciale.
-        Da lì, ogni messaggio del cliente diventa un’azione concreta per il team.
-      </p>
-      <div class="footnote">
-        <span>AutoPing — hub WhatsApp per concessionarie</span>
-        <span class="nav-hint">Fine — Esc per ripartire</span>
+    <section class="slide" data-title="Percorsi">
+      <p class="eyebrow">Tre servizi</p>
+      <h2>Un numero. Tutto ciò che serve.</h2>
+      <p class="lede" style="margin-bottom:1.5rem">Menu semplice, tono formale, conferma chiara. Poi il team richiama con tutto già raccolto.</p>
+      <div class="paths">
+        <article class="path">
+          <div class="n">01</div>
+          <strong>Tagliando</strong>
+          <p>Targa e auto sostitutiva. L’officina riceve i dati pronti per fissare.</p>
+        </article>
+        <article class="path">
+          <div class="n">02</div>
+          <strong>Prova su strada</strong>
+          <p>Fascia oraria preferita. Il commerciale conferma giorno e sede.</p>
+        </article>
+        <article class="path">
+          <div class="n">03</div>
+          <strong>Preventivo</strong>
+          <p>Scelta della linea di interesse. Arriva al referente giusto.</p>
+        </article>
       </div>
     </section>
+
+    <section class="slide" data-title="Team">
+      <p class="eyebrow">Per il team</p>
+      <h2>La richiesta arriva dove deve arrivare.</h2>
+      <div class="split" style="margin-top:0.75rem">
+        <p class="lede">
+          Ogni alert include i dati del cliente e un link per rispondere su WhatsApp.
+          Chi riceve sa che è il suo turno di richiamare.
+        </p>
+        <div class="route-panel">
+          <div class="route-row"><span>Tagliando</span><strong>Officina</strong></div>
+          <div class="route-row"><span>Prova su strada</span><strong>Commerciale</strong></div>
+          <div class="route-row"><span>Preventivo</span><strong>Referente di linea</strong></div>
+          <div class="route-row"><span>Operatore</span><strong>Commerciale</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Chiusura">
+      <p class="eyebrow">Prossimo passo</p>
+      <h1>Un canale WhatsApp che lavora come il vostro salone.</h1>
+      <p class="lede">
+        Si collega al numero della concessionaria. Si impostano i destinatari.
+        Da lì, ogni messaggio diventa un’azione concreta per il team.
+      </p>
+      <p class="cta-line">Pronto per una demo sul vostro numero.</p>
+    </section>
   </div>
+
+  <div class="hint">← → · spazio</div>
+  <div class="dots" id="dots"></div>
 
   <script>
     (function () {
       const slides = Array.from(document.querySelectorAll(".slide"));
+      const progress = document.getElementById("progress");
+      const dotsWrap = document.getElementById("dots");
       let i = 0;
+
+      slides.forEach((_, idx) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("aria-label", "Slide " + (idx + 1));
+        b.addEventListener("click", (e) => {
+          e.stopPropagation();
+          show(idx);
+        });
+        dotsWrap.appendChild(b);
+      });
+      const dots = Array.from(dotsWrap.querySelectorAll("button"));
 
       function show(n) {
         i = (n + slides.length) % slides.length;
         slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
-        slides.forEach((s, idx) => {
-          const f = s.querySelector(".footnote span:last-child");
-          if (f && !f.classList.contains("nav-hint")) {
-            f.textContent = (idx + 1) + " / " + slides.length;
-          }
-        });
-        document.title = "AutoPing — " + (slides[i].dataset.title || "Prodotto");
+        dots.forEach((d, idx) => d.classList.toggle("on", idx === i));
+        progress.style.width = ((i + 1) / slides.length) * 100 + "%";
+        document.title = "AutoPing — " + (slides[i].dataset.title || "");
       }
 
       document.addEventListener("keydown", (e) => {
@@ -380,7 +525,7 @@
       });
 
       document.getElementById("deck").addEventListener("click", (e) => {
-        if (e.target.closest("a")) return;
+        if (e.target.closest("a,button")) return;
         const x = e.clientX / window.innerWidth;
         show(x > 0.35 ? i + 1 : i - 1);
       });
