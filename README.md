@@ -1,5 +1,9 @@
 # AutoPing
 
+<p align="center">
+  <img src="docs/assets/logo-autoping-lockup.png" alt="AutoPing" width="420" />
+</p>
+
 **Il cliente scrive. Voi chiudete.**
 
 Assistente WhatsApp per concessionarie: gestisce **tagliando**, **prova su strada** e **preventivo**, e avvisa subito chi deve richiamare.
