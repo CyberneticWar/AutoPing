@@ -11,9 +11,10 @@ MVP backend asincrono che azzera lo **Speed-to-Lead** delle concessionarie auto:
 | API | FastAPI (async) + Uvicorn |
 | Validation | Pydantic v2 + pydantic-settings |
 | HTTP esterno | httpx.AsyncClient |
-| WhatsApp | Meta Cloud API (Graph) |
-| Alert venditori | Telegram Bot API |
-| Persistence | Supabase (PostgreSQL) via `supabase-py` |
+| WhatsApp | Meta Cloud API (Graph) + PyWa hub |
+| Alert staff | Email mirata (Resend/SMTP) + WA staff opzionale |
+| Alert legacy Lead Ads | Telegram Bot API (opzionale) |
+| Persistence | JSON locale (`data/`) + Supabase (leads / mirror opzionale) |
 
 ## Indice moduli
 
@@ -37,16 +38,24 @@ app/
     messages.py           # Template testo + lista slot prova guida
     whatsapp.py           # Messaggi Cloud API (testo + interactive)
     whatsapp_inbound.py   # Parse list_reply / button_reply
-    telegram.py           # Alert venditore di turno
+    telegram.py           # Alert legacy Lead Ads (opzionale)
     logger.py             # Insert/update leads su Supabase
     dispatcher.py         # asyncio.gather WA + TG
+    routing.py            # Intent/marca → un destinatario staff
+    email.py              # Resend / SMTP
+    staff_notify.py       # Alert email (+ WA staff opzionale)
+    conversation_store.py # Persistenza richieste hub
+    notify_monitor.py     # Log fallimenti invio
+  conversation/
+    session_store.py      # Sessioni TurnStack su file JSON
   clients/
     http.py               # Factory httpx con timeout stretti
     supabase.py           # Client Supabase + wrapper async
 ```
 
 API webhook aggiuntiva: `GET/POST /api/v1/webhooks/whatsapp` per scelte fasce orarie.
-Conversazione keyword (tagliando): PyWa su `GET/POST /api/v1/webhooks/pywa` + TurnStack (`app/conversation/`). Vedi [`06_Conversation_Tagliando.md`](06_Conversation_Tagliando.md).
+Conversazione keyword (hub): PyWa su `GET/POST /api/v1/webhooks/pywa` + TurnStack (`app/conversation/`).  
+Vedi [`06_Conversation_Tagliando.md`](06_Conversation_Tagliando.md), [`07_Staff_Routing_Draft.md`](07_Staff_Routing_Draft.md), [`08_Hosting_Webhook.md`](08_Hosting_Webhook.md).
 ## Flusso dati
 
 ```

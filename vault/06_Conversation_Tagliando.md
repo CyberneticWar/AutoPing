@@ -1,8 +1,8 @@
-# AutoPing — Conversazione WhatsApp (hub Autostars)
+# AutoPing — Conversazione WhatsApp (hub)
 
 ## Obiettivo
 
-Menu keyword + pulsanti (non chatbot AI), allineato ai servizi del [sito Autostars](https://www.auto-stars.it/servizi): **Tagliando**, **Prova su strada**, **Preventivo**.
+Menu keyword + pulsanti (non chatbot AI) per i servizi tipici di salone e officina: **Tagliando**, **Prova su strada**, **Preventivo**.
 
 Stack: **PyWa** + **TurnStack**.
 
@@ -20,21 +20,25 @@ Dopo ogni intent → conferma → **menu hub** (*Posso aiutarla con altro?*).
 
 1. Targa italiana  
 2. Auto sostitutiva **gratuita?** Sì/No  
-3. Conferma (senza placeholder intestatario)  
-4. Anti-duplicati: 1 pending/targa (72h), max 3/giorno per WA  
-5. Notifica staff — **bozza:** routing officina (vedi [`07_Staff_Routing_Draft.md`](07_Staff_Routing_Draft.md)); non in flusso email oggi  
+3. Conferma (orari accettazione + “l'officina la ricontatterà”)  
+4. Anti-duplicati: 1 pending/targa (72h), max 3/giorno per WA (`data/tagliando_requests.json`)  
+5. Notifica staff → **officina** (`ROUTE_OFFICINA`)
 
 ### Prova su strada
 
 1. Lista fasce da `PROVA_GUIDA_SLOTS`  
-2. Conferma con fascia + open/closed  
-3. Notifica staff — **bozza:** commerciale di default ([`07`](07_Staff_Routing_Draft.md))  
+2. Conferma con fascia + sede + richiamo commerciale  
+3. Notifica staff → **commerciale default** (`ROUTE_DEFAULT_COMMERCIALE`)
 
 ### Preventivo
 
-1. Oggi: sola conferma + link promo `https://www.auto-stars.it/promoauto`  
-2. **Roadmap:** 1 domanda **Renault / Dacia / usato**, poi conferma + link  
-3. Notifica staff — **bozza:** referente per marca ([`07`](07_Staff_Routing_Draft.md)); **niente blast a tutti i venditori**
+1. Scelta linea veicolo (es. **marca A / marca B / usato** — configurabile per dealer multi-brand)  
+2. Conferma + link promo configurabile (`PREVENTIVO_PROMO_URL`)  
+3. Notifica staff → referente linea (`ROUTE_BRAND_A` / `ROUTE_BRAND_B` / `ROUTE_USATO`, fallback commerciale)
+
+### Operatore
+
+Handover testo → notifica **commerciale default**.
 
 ## Keywords
 
@@ -50,18 +54,27 @@ Dopo ogni intent → conferma → **menu hub** (*Posso aiutarla con altro?*).
 
 Primo messaggio fuori L–V 8–12/14–18 (Europe/Rome) → avviso + menu senza secondo Buongiorno.
 
+## Persistenza e monitoring
+
+- Sessioni conversazione: `data/sessions.json` (sopravvivono al restart)
+- Richieste completate: `data/conversation_requests.json`
+- Fallimenti WA/email: `data/notify_failures.jsonl` + `/health`
+- Admin opzionale: `NOTIFY_ADMIN_EMAIL` su errore notifica
+
 ## Limiti MVP
 
-- Nessun calendario Renault/DB per slot officina  
+- Nessun calendario CRM di marca / DB per slot officina  
 - Nessuno scrape listino modelli  
-- Registro anti-abuso locale `data/tagliando_requests.json`  
-- Sessioni in-memory  
-- **Email / routing staff:** solo documentato in bozza — **non nel flusso runtime**  
-- Telegram non è il canale operativo per Autostars (non usato in salone)
+- Round-robin venditori non attivo  
+- Telegram non è il canale staff primario del prodotto
 
 ## File
 
 - [`app/conversation/flows/tagliando.py`](../app/conversation/flows/tagliando.py)
 - [`app/conversation/router.py`](../app/conversation/router.py)
 - [`app/conversation/pywa_app.py`](../app/conversation/pywa_app.py)
+- [`app/conversation/session_store.py`](../app/conversation/session_store.py)
+- [`app/services/staff_notify.py`](../app/services/staff_notify.py)
 - [`app/core/config.py`](../app/core/config.py)
+- Routing: [`07_Staff_Routing_Draft.md`](07_Staff_Routing_Draft.md)
+- Hosting: [`08_Hosting_Webhook.md`](08_Hosting_Webhook.md)

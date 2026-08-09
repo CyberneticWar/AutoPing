@@ -77,8 +77,8 @@ Se il webhook non include `field_data`, il servizio arricchisce il lead con:
   "created_time": 1710000000,
   "name": "Mario Rossi",
   "phone_number": "+393331112233",
-  "brand": "Dacia",
-  "car_model": "Duster",
+  "brand": "MarcaB",
+  "car_model": "ModelloY",
   "intent": "prova_guida"
 }
 ```

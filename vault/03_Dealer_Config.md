@@ -4,7 +4,7 @@
 
 Ogni concessionaria è un **tenant** identificato da:
 
-- `dealer_id` — chiave interna (slug, es. `autostars-lario`)
+- `dealer_id` — chiave interna (slug, es. `dealer-nord`)
 - `page_id` — Facebook Page ID collegata alle Lead Ads
 
 Il webhook risolve il tenant così:
@@ -13,7 +13,7 @@ Il webhook risolve il tenant così:
 page_id (dal payload Meta) → DealerConfig → canali WA/TG + template + slot
 ```
 
-**Autostars:** vendono Renault, Dacia e usato di altre marche. Il messaggio usa `{brand}` + `{car_model}` dal lead (non hardcodare solo Renault). `dealer_name` resta **Autostars**.
+**Multi-brand:** il messaggio usa `{brand}` + `{car_model}` dal lead (non hardcodare una sola marca). `dealer_name` è il nome commerciale della concessionaria.
 
 ## Schema `dealers` (Supabase)
 
@@ -22,10 +22,10 @@ page_id (dal payload Meta) → DealerConfig → canali WA/TG + template + slot
 | dealer_id | text PK | slug univoco |
 | page_id | text UNIQUE | Facebook Page ID |
 | brand_label | text | fallback brand veicolo se assente sul lead |
-| dealer_name | text | es. Autostars |
+| dealer_name | text | es. Nome Concessionaria |
 | whatsapp_phone_number_id | text | Phone Number ID Cloud API |
 | whatsapp_access_token | text | token WA (o eredita env globale) |
-| telegram_chat_id | text | chat/gruppo venditore di turno |
+| telegram_chat_id | text | chat/gruppo venditore di turno (legacy Lead Ads) |
 | whatsapp_*_template | text | opzionale, override copy |
 | prova_guida_slots | text | pipe-separated fasce |
 | is_active | boolean | default true |
@@ -52,7 +52,7 @@ Placeholder: `{name}`, `{brand}`, `{car_model}`, `{phone_number}`, `{intent}`, `
 | `preventivo` | preventivo |
 | `prova_guida` | prova guida + **lista interattiva** fasce orarie |
 
-**Telegram (venditore):** alert lead +, su tap fascia, alert “SCELTA PROVA GUIDA”.
+**Telegram (legacy Lead Ads):** alert lead +, su tap fascia, alert “SCELTA PROVA GUIDA”.
 
 ## Slot prova guida
 

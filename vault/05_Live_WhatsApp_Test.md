@@ -12,7 +12,7 @@
 ```env
 WHATSAPP_PHONE_NUMBER_ID=...
 WHATSAPP_ACCESS_TOKEN=...   # temporary ~24h in sandbox; System User in prod
-DEFAULT_DEALER_NAME=Autostars
+DEFAULT_DEALER_NAME=Concessionaria Demo
 PROVA_GUIDA_SLOTS=Sabato 10:00|Sabato 15:00|Domenica 11:00|Altro - richiamo
 ```
 
@@ -25,20 +25,22 @@ uvicorn app.main:app --reload --port 8000
 
 ```powershell
 # Preventivo (solo testo)
-.\scripts\send_test_lead.ps1 -Phone "+393485720768" -Name "Mario Rossi" -Brand "Renault" -CarModel "Austral" -Intent "preventivo"
+.\scripts\send_test_lead.ps1 -Phone "+393485720768" -Name "Mario Rossi" -Brand "MarcaA" -CarModel "ModelloX" -Intent "preventivo"
 
 # Prova guida (testo + lista interattiva)
-.\scripts\send_test_lead.ps1 -Phone "+393485720768" -Name "Mario Rossi" -Brand "Dacia" -CarModel "Duster" -Intent "prova_guida"
+.\scripts\send_test_lead.ps1 -Phone "+393485720768" -Name "Mario Rossi" -Brand "MarcaB" -CarModel "ModelloY" -Intent "prova_guida"
 ```
 
 Risposta attesa prova guida: `whatsapp_ok: true`, `interactive_slots_sent: true`.
 
 ## Webhook risposte WhatsApp (scelta fascia)
 
-- Verify: `GET /api/v1/webhooks/whatsapp` (stesso `META_VERIFY_TOKEN`)
-- Events: `POST /api/v1/webhooks/whatsapp`
+- Hub conversazione (preferito): `GET/POST /api/v1/webhooks/pywa`
+- Legacy slot Lead Ads: `GET/POST /api/v1/webhooks/whatsapp`
+- Verify: stesso `META_VERIFY_TOKEN`
 
-In sandbox locale senza ngrok, Meta non può richiamarti: la lista sul telefono funziona comunque; per ricevere il tap in AutoPing serve URL pubblico (piano successivo).
+**Produzione:** URL pubblico stabile (`PUBLIC_BASE_URL`) — vedi [`08_Hosting_Webhook.md`](08_Hosting_Webhook.md).  
+Tunnel Cloudflare/ngrok solo per sandbox locale.
 
 Test parser locale: inviare un JSON di prova a `POST /whatsapp` (vedi `vault/02_API_Routes.md`).
 
