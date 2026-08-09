@@ -1,5 +1,7 @@
 # AutoPing — API Routes
 
+> Documentazione prodotto AutoPing (vetrina pubblica).
+
 Base path: `/api/v1`
 
 Implementazione: [`app/api/v1/webhooks.py`](../app/api/v1/webhooks.py).

@@ -1,5 +1,7 @@
 # AutoPing — prova live WhatsApp (da zero)
 
+> Documentazione prodotto AutoPing (vetrina pubblica).
+
 ## Idea
 
 - **FROM:** numero di prova Meta (es. `+1 555 670 3500`)

@@ -1,5 +1,7 @@
 # AutoPing — Routing staff (implementato)
 
+> Documentazione prodotto AutoPing (vetrina pubblica).
+
 > **Stato:** attivo nel flusso WhatsApp hub.  
 > Telegram non è il canale staff primario del prodotto.
 

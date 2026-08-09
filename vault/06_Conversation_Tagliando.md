@@ -1,5 +1,7 @@
 # AutoPing — Conversazione WhatsApp (hub)
 
+> Documentazione prodotto AutoPing (vetrina pubblica).
+
 ## Obiettivo
 
 Menu keyword + pulsanti (non chatbot AI) per i servizi tipici di salone e officina: **Tagliando**, **Prova su strada**, **Preventivo**.

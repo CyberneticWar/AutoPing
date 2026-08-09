@@ -1,5 +1,7 @@
 # AutoPing — Hosting stabile e webhook fisso
 
+> Documentazione prodotto AutoPing (vetrina pubblica).
+
 ## Obiettivo
 
 Sostituire tunnel temporanei (es. Cloudflare trycloudflare) con un **URL pubblico stabile** e configurare Meta una sola volta.

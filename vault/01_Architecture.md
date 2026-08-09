@@ -1,5 +1,7 @@
 # AutoPing — Architecture
 
+> Documentazione prodotto AutoPing (vetrina pubblica).
+
 ## Obiettivo
 
 MVP backend asincrono che azzera lo **Speed-to-Lead** delle concessionarie auto: dal webhook Meta Lead Ads a WhatsApp + alert Telegram in **&lt; 3 secondi**.

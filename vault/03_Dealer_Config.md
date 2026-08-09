@@ -1,5 +1,7 @@
 # AutoPing — Dealer Config (Multi-tenant)
 
+> Documentazione prodotto AutoPing (vetrina pubblica).
+
 ## Pattern
 
 Ogni concessionaria è un **tenant** identificato da:
