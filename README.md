@@ -1,52 +1,52 @@
 # AutoPing
 
-**WhatsApp che lavora per la concessionaria.**
+**L’assistente WhatsApp della concessionaria.**
 
-Un canale unico per **tagliando**, **prova su strada** e **preventivo**:
-il cliente è seguito subito, la richiesta arriva a chi di competenza —
-con tono formale (**Lei**) e percorsi chiari.
+Il cliente scrive per un tagliando, una prova su strada o un preventivo.  
+AutoPing lo guida in un percorso semplice e avvisa subito chi deve richiamare — officina o commerciale.
 
 ## Presentazione
 
-Apri la presentazione interattiva (slide a schermo intero):
+Per vederla come slide (non come codice):
 
-**https://cyberneticwar.github.io/AutoPing/**
+**[Apri la presentazione](https://cyberneticwar.github.io/AutoPing/presentazione-autoping.html)**
 
-> Su GitHub il file `.html` mostra il codice sorgente: è normale.
-> Per **vedere** le slide usa il link sopra, oppure apri il file in locale nel browser.
+In alternativa, in locale: apri il file `docs/presentazione-autoping.html` direttamente nel browser (doppio clic), oppure `http://127.0.0.1:8765/presentazione-autoping.html` se stai servendo la cartella `docs`.
 
-Navigazione: frecce o spazio · clic sinistra/destra · Esc torna all’inizio.
+> Su GitHub, il link al file `.html` mostra il **codice sorgente**. Per le slide serve GitHub Pages (link sopra) oppure l’apertura locale.
+
+Navigazione slide: frecce o spazio · clic sinistra/destra · Esc torna all’inizio.
 
 ## A chi è rivolto
 
-Concessionarie e saloni che vogliono gestire su WhatsApp le richieste più frequenti —
-officina, prova guida, preventivo — con un’esperienza professionale e un follow-up ordinato.
+Concessionarie e saloni che vogliono un unico numero WhatsApp per le richieste quotidiane di officina e commerciale, con messaggi professionali (tono *Lei*) e notifiche ordinate al team.
 
 ## Cosa fa
 
-| Percorso | Cosa raccoglie | Chi viene avvisato |
-|----------|----------------|--------------------|
-| **Tagliando** | Targa, auto sostitutiva, conferma | Officina |
-| **Prova su strada** | Fascia oraria, conferma | Commerciale |
-| **Preventivo** | Linea veicolo, conferma | Referente di linea |
+| Percorso | Per il cliente | Per il team |
+|----------|----------------|-------------|
+| **Tagliando** | Indica targa e se serve auto sostitutiva | L’officina riceve i dati pronti |
+| **Prova su strada** | Sceglie una fascia oraria | Il commerciale conferma l’appuntamento |
+| **Preventivo** | Indica la linea di interesse | Arriva al referente di quella linea |
 
 Dopo ogni richiesta: *Posso aiutarla con altro?*
 
-## Perché funziona
+## Perché funziona in salone
 
-- **Risposta immediata** al cliente, anche fuori orario
-- **Routing mirato** — ogni richiesta ha un responsabile chiaro
-- **Copy curato** — messaggi coerenti con l’immagine del salone
-- **Operativo in produzione** — hosting stabile, webhook Meta, sessioni salvate
+- **Risposta immediata** — il cliente sa subito che è stato ascoltato  
+- **Dati già raccolti** — meno messaggi avanti e indietro  
+- **La persona giusta** — ogni richiesta va a chi la deve gestire  
+- **Anche fuori orario** — orari chiari e richiesta comunque registrata  
 
-## Documentazione
+## Documentazione tecnica
 
 | Documento | Contenuto |
 |-----------|-----------|
-| [Conversazione](vault/06_Conversation_Tagliando.md) | Hub menu e flussi |
-| [Routing staff](vault/07_Staff_Routing_Draft.md) | Destinatari per ruolo e linea |
-| [Hosting / webhook](vault/08_Hosting_Webhook.md) | URL pubblico e Meta |
-| [Architecture](vault/01_Architecture.md) | Architettura di riferimento |
+| [06 · Conversazione](vault/06_Conversation_Tagliando.md) | Menu e flussi |
+| [07 · Routing staff](vault/07_Staff_Routing_Draft.md) | Destinatari per ruolo / linea |
+| [08 · Hosting / webhook](vault/08_Hosting_Webhook.md) | URL pubblico e Meta |
+| [01 · Architecture](vault/01_Architecture.md) | Architettura |
+| [05 · Live WhatsApp test](vault/05_Live_WhatsApp_Test.md) | Setup sandbox |
 
 ---
 
