@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AutoPing — Hub WhatsApp per concessionarie</title>
+  <title>AutoPing — WhatsApp per la concessionaria</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -16,10 +16,7 @@
       --line: #d5d2c8;
       --accent: #0f6b4c;
       --accent-soft: #e3f0ea;
-      --warm: #c45c26;
-      --slide-pad: clamp(2rem, 5vw, 4.5rem);
     }
-
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
@@ -29,17 +26,11 @@
       font-family: "Manrope", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-
-    .deck {
-      height: 100%;
-      overflow: hidden;
-      position: relative;
-    }
-
+    .deck { height: 100%; overflow: hidden; position: relative; }
     .slide {
       display: none;
       height: 100%;
-      padding: var(--slide-pad);
+      padding: clamp(2rem, 5vw, 4.5rem);
       background:
         radial-gradient(1200px 600px at 100% -10%, #1f3d34 0%, transparent 55%),
         linear-gradient(160deg, #f7f5ef 0%, #ebe7de 100%);
@@ -48,7 +39,6 @@
       position: relative;
     }
     .slide.active { display: flex; }
-
     .slide::before {
       content: "";
       position: absolute;
@@ -56,7 +46,6 @@
       width: 6px;
       background: var(--accent);
     }
-
     .eyebrow {
       font-size: 0.78rem;
       letter-spacing: 0.16em;
@@ -65,7 +54,6 @@
       color: var(--accent);
       margin: 0 0 1rem;
     }
-
     h1, h2 {
       font-family: "Instrument Serif", Georgia, serif;
       font-weight: 400;
@@ -75,22 +63,20 @@
     }
     h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); }
     h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); max-width: 22ch; }
-
     .lede {
       font-size: clamp(1.05rem, 1.6vw, 1.25rem);
       color: var(--muted);
-      max-width: 42rem;
+      max-width: 40rem;
       line-height: 1.55;
       margin: 0 0 1.75rem;
     }
-
     .brand-mark {
       font-family: "Instrument Serif", Georgia, serif;
-      font-size: 1.35rem;
-      margin-bottom: 2.5rem;
+      font-size: 1.5rem;
+      margin-bottom: 2.25rem;
+      letter-spacing: -0.02em;
     }
     .brand-mark span { color: var(--accent); }
-
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -121,12 +107,11 @@
       color: var(--accent);
       margin-bottom: 0.35rem;
     }
-
     ul.clean {
       margin: 0;
       padding: 0;
       list-style: none;
-      max-width: 40rem;
+      max-width: 42rem;
     }
     ul.clean li {
       padding: 0.85rem 0;
@@ -136,10 +121,9 @@
     }
     ul.clean li:first-child { border-top: 1px solid var(--line); }
     ul.clean b { color: var(--ink); }
-
     .two-col {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 2rem;
       align-items: start;
       max-width: 980px;
@@ -164,8 +148,7 @@
       font-size: 0.98rem;
     }
     .panel ul { margin: 0; padding-left: 1.1rem; }
-    .panel li + li { margin-top: 0.4rem; }
-
+    .panel li + li { margin-top: 0.45rem; }
     table.route {
       width: 100%;
       max-width: 820px;
@@ -188,11 +171,10 @@
       color: var(--accent);
     }
     table.route tr:last-child td { border-bottom: 0; }
-
     .footnote {
       position: absolute;
-      left: var(--slide-pad);
-      right: var(--slide-pad);
+      left: clamp(2rem, 5vw, 4.5rem);
+      right: clamp(2rem, 5vw, 4.5rem);
       bottom: 1.4rem;
       display: flex;
       justify-content: space-between;
@@ -201,19 +183,6 @@
       font-size: 0.8rem;
     }
     .nav-hint { opacity: 0.75; }
-
-    .cta {
-      display: inline-block;
-      margin-top: 0.5rem;
-      padding: 0.85rem 1.35rem;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 2px;
-    }
-
     .dark {
       background:
         radial-gradient(900px 500px at 0% 0%, #1b4a3a 0%, transparent 50%),
@@ -224,9 +193,17 @@
     .dark .eyebrow { color: #7dceae; }
     .dark .lede, .dark .footnote { color: #a8b5af; }
     .dark h1, .dark h2 { color: #f7f5ef; }
-
+    .dark .brand-mark { color: #f7f5ef; }
+    .dark .brand-mark span { color: #7dceae; }
+    .benefit {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      max-width: 900px;
+    }
+    .benefit .card { min-height: 7.5rem; }
     @media (max-width: 860px) {
-      .grid-3, .two-col { grid-template-columns: 1fr; }
+      .grid-3, .two-col, .benefit { grid-template-columns: 1fr; }
       .card { min-height: 0; }
     }
   </style>
@@ -235,80 +212,79 @@
   <div class="deck" id="deck">
 
     <section class="slide dark active" data-title="Copertina">
-      <p class="brand-mark">AutoPing</p>
-      <p class="eyebrow">Prodotto</p>
-      <h1>WhatsApp che lavora per la concessionaria</h1>
+      <p class="brand-mark">Auto<span>Ping</span></p>
+      <p class="eyebrow">WhatsApp per concessionarie</p>
+      <h1>Il salone risponde. Il cliente resta.</h1>
       <p class="lede">
-        Un canale unico per tagliando, prova su strada e preventivo:
-        il cliente scrive, la concessionaria riceve richieste ordinate — senza chatbot generico
-        e senza notifiche a raffica a tutto il commerciale.
+        AutoPing trasforma WhatsApp in un canale ordinato per tagliando,
+        prova su strada e preventivo: il cliente è seguito subito,
+        la richiesta arriva a chi di competenza.
       </p>
       <div class="footnote">
-        <span>Hub WhatsApp per concessionarie</span>
+        <span>Presentazione prodotto</span>
         <span class="nav-hint">← → o spazio per navigare</span>
       </div>
     </section>
 
-    <section class="slide" data-title="Problema">
-      <p class="eyebrow">Contesto</p>
-      <h2>Ogni minuto perso sul lead costa una chiamata che non torna</h2>
+    <section class="slide" data-title="Perché">
+      <p class="eyebrow">Il momento decisivo</p>
+      <h2>Chi risponde per primo chiude la conversazione</h2>
       <p class="lede">
-        Clienti e prospect si aspettano risposte rapide su WhatsApp.
-        Se la richiesta si perde tra chat personali, appunti e “te lo mando dopo”,
-        vince chi risponde prima — spesso un concorrente.
+        Su WhatsApp il cliente si aspetta una risposta chiara in pochi minuti.
+        Se la richiesta si perde tra chat personali e “te lo passo dopo”,
+        la chiamata successiva spesso è a un’altra concessionaria.
       </p>
       <ul class="clean">
-        <li><b>Officina e commerciale</b> hanno ritmi diversi: un solo inbox confonde.</li>
-        <li><b>Fuori orario</b> le richieste restano in sospeso senza messaggio chiaro al cliente.</li>
-        <li><b>Avvisare tutti i venditori</b> crea rumore: nessuno si sente responsabile.</li>
+        <li><b>Officina e commerciale</b> lavorano su tempi diversi: serve indirizzare bene.</li>
+        <li><b>Fuori orario</b> il cliente vuole sapere che è stato ascoltato.</li>
+        <li><b>Ogni lead</b> merita un responsabile chiaro, non un gruppo in copia.</li>
       </ul>
       <div class="footnote"><span>AutoPing</span><span></span></div>
     </section>
 
     <section class="slide" data-title="Soluzione">
-      <p class="eyebrow">Soluzione</p>
-      <h2>Un hub WhatsApp, tre percorsi chiari</h2>
+      <p class="eyebrow">Cosa offre AutoPing</p>
+      <h2>Tre percorsi pronti, un solo numero WhatsApp</h2>
       <p class="lede">
-        Menu e pulsanti in tono formale (Lei). Nessuna intelligenza artificiale che “improvvisa”:
-        flussi guidati allineati ai servizi tipici di salone e officina.
+        Menu e pulsanti in tono formale (Lei). Percorsi guidati, messaggi curati,
+        esperienza coerente con un salone professionale.
       </p>
       <div class="grid-3">
         <article class="card">
           <div class="n">01</div>
           <strong>Tagliando</strong>
-          <p>Targa, auto sostitutiva gratuita sì/no, conferma. Anti-duplicati per targa e utente.</p>
+          <p>Targa, auto sostitutiva, conferma. L’officina riceve tutto ciò che serve per richiamare.</p>
         </article>
         <article class="card">
           <div class="n">02</div>
           <strong>Prova su strada</strong>
-          <p>Scelta fascia oraria, conferma con sede, richiamo da parte del commerciale.</p>
+          <p>Fascia oraria preferita e conferma. Il commerciale sa già quando e dove partire.</p>
         </article>
         <article class="card">
           <div class="n">03</div>
           <strong>Preventivo</strong>
-          <p>Scelta linea veicolo (es. marca A · marca B · usato), conferma e link promo configurabile.</p>
+          <p>Scelta della linea (nuova o usato). Il referente giusto riceve la richiesta.</p>
         </article>
       </div>
       <div class="footnote"><span>AutoPing</span><span></span></div>
     </section>
 
-    <section class="slide" data-title="Esperienza">
+    <section class="slide" data-title="Cliente">
       <p class="eyebrow">Esperienza cliente</p>
-      <h2>Dal primo messaggio al menu, senza attrito</h2>
+      <h2>Dal primo messaggio alla conferma, senza attrito</h2>
       <div class="two-col">
         <ul class="clean">
-          <li><b>Primo contatto</b> — saluto e menu (Tagliando, Prova, Preventivo).</li>
-          <li><b>Dopo ogni richiesta</b> — “Posso aiutarla con altro?” con gli stessi percorsi.</li>
-          <li><b>Fuori orario</b> — avviso chiaro sugli orari della sede, menu comunque disponibile.</li>
-          <li><b>Operatore</b> — passaggio a una persona, senza abbandonare il cliente in silenzio.</li>
+          <li><b>Benvenuto chiaro</b> — menu con Tagliando, Prova su strada, Preventivo.</li>
+          <li><b>Dopo ogni richiesta</b> — “Posso aiutarla con altro?” e stessi percorsi.</li>
+          <li><b>Fuori orario</b> — orari della sede e garanzia di ripresa alla riapertura.</li>
+          <li><b>Parlare con qualcuno</b> — passaggio immediato a un consulente.</li>
         </ul>
         <aside class="panel">
-          <h3>Keyword utili</h3>
+          <h3>In pratica</h3>
           <ul>
-            <li>tagliando, manutenzione, service</li>
-            <li>prova, test drive</li>
-            <li>preventivo, quotazione</li>
-            <li>menu, operatore</li>
+            <li>Il cliente scrive come farebbe a un’assistente.</li>
+            <li>AutoPing guida i passi e conferma.</li>
+            <li>Lo staff riceve un alert pronto da richiamare.</li>
           </ul>
         </aside>
       </div>
@@ -316,75 +292,63 @@
     </section>
 
     <section class="slide" data-title="Staff">
-      <p class="eyebrow">Notifiche interne</p>
-      <h2>Una richiesta, un destinatario</h2>
+      <p class="eyebrow">Per il team</p>
+      <h2>Ogni richiesta arriva a chi la gestisce</h2>
       <p class="lede">
-        Niente blast email a tutto il team. Routing per ruolo e, sul preventivo, per linea veicolo.
-        Canale staff: email (WhatsApp staff opzionale). Telegram non è il canale primario del prodotto.
+        Routing intelligente per ruolo e, sul preventivo, per linea veicolo.
+        Una mail (o un WhatsApp staff), un responsabile, un follow-up chiaro.
       </p>
       <table class="route">
         <thead>
-          <tr><th>Richiesta</th><th>Destinatario</th></tr>
+          <tr><th>Richiesta</th><th>Arriva a</th></tr>
         </thead>
         <tbody>
           <tr><td>Tagliando</td><td>Officina</td></tr>
-          <tr><td>Prova / Operatore</td><td>Commerciale di default (casella o turno)</td></tr>
-          <tr><td>Preventivo · linea A</td><td>Referente linea A</td></tr>
-          <tr><td>Preventivo · linea B</td><td>Referente linea B</td></tr>
+          <tr><td>Prova su strada / Operatore</td><td>Commerciale di riferimento</td></tr>
+          <tr><td>Preventivo · linea A</td><td>Referente di linea</td></tr>
+          <tr><td>Preventivo · linea B</td><td>Referente di linea</td></tr>
           <tr><td>Preventivo · Usato</td><td>Referente usato</td></tr>
         </tbody>
       </table>
-      <div class="footnote"><span>Dettaglio: vault/07_Staff_Routing_Draft.md</span><span></span></div>
+      <div class="footnote"><span>AutoPing</span><span></span></div>
     </section>
 
-    <section class="slide" data-title="Capacità">
-      <p class="eyebrow">Capacità prodotto</p>
-      <h2>Dal prototipo al salone</h2>
-      <div class="grid-3">
+    <section class="slide" data-title="Valore">
+      <p class="eyebrow">Perché conviene</p>
+      <h2>Più ordine. Più richiami. Meno lead persi.</h2>
+      <div class="benefit">
         <article class="card">
-          <div class="n">01</div>
-          <strong>Operatività</strong>
-          <p>Hosting stabile, webhook Meta fisso, routing staff (officina + commerciale + linee).</p>
+          <strong>Velocità sul primo contatto</strong>
+          <p>Il cliente riceve subito conferma e sa cosa succede dopo.</p>
         </article>
         <article class="card">
-          <div class="n">02</div>
-          <strong>Affidabilità</strong>
-          <p>Sessioni e richieste persistenti, monitoraggio errori, niente dipendenza dal PC locale.</p>
+          <strong>Responsabilità chiara</strong>
+          <p>Officina e commerciale vedono solo ciò che gli compete.</p>
         </article>
         <article class="card">
-          <div class="n">03</div>
-          <strong>Configurazione</strong>
-          <p>Numero WhatsApp Business della concessionaria, linee preventivo, copy post-conferma.</p>
+          <strong>Immagine di salone</strong>
+          <p>Tono formale, messaggi curati, esperienza professionale.</p>
+        </article>
+        <article class="card">
+          <strong>Pronto per il quotidiano</strong>
+          <p>Hosting stabile, sessioni salvate, alert anche fuori orario.</p>
         </article>
       </div>
       <div class="footnote"><span>AutoPing</span><span></span></div>
     </section>
 
-    <section class="slide" data-title="Cosa non è">
-      <p class="eyebrow">Perimetro</p>
-      <h2>Cosa AutoPing non pretende di essere</h2>
-      <ul class="clean">
-        <li><b>Non è un chatbot LLM</b> — copy e percorsi sono controllati, tono Lei.</li>
-        <li><b>Non sostituisce il CRM di marca</b> — integra il primo contatto WhatsApp.</li>
-        <li><b>Non sparge lead</b> — assegnazione mirata, responsabilità chiara.</li>
-        <li><b>Non dipende da Telegram</b> — canale staff: email / WhatsApp interni.</li>
-      </ul>
-      <div class="footnote"><span>AutoPing</span><span></span></div>
-    </section>
-
     <section class="slide dark" data-title="Chiusura">
-      <p class="eyebrow">In sintesi</p>
-      <h1>Un hub ordinato per salone e officina</h1>
+      <p class="brand-mark">Auto<span>Ping</span></p>
+      <p class="eyebrow">Prossimo passo</p>
+      <h1>Mettiamo WhatsApp al servizio del salone</h1>
       <p class="lede">
-        Configurare destinatari (officina, commerciale, linee), hosting e numero WhatsApp Business.
-        Il resto è esecuzione: flussi guidati, routing mirato, copy professionale.
-      </p>
-      <p class="lede" style="margin-bottom:0">
-        Documentazione: cartella <em>vault/</em> · Presentazione: questo file.
+        Definiamo insieme destinatari (officina e commerciale),
+        il numero WhatsApp Business e i messaggi della vostra sede.
+        In poco tempo il canale è operativo — e i clienti lo notano.
       </p>
       <div class="footnote">
         <span>AutoPing — hub WhatsApp per concessionarie</span>
-        <span class="nav-hint">Fine — Esc per ripartire dalla prima</span>
+        <span class="nav-hint">Fine — Esc per tornare all’inizio</span>
       </div>
     </section>
   </div>
@@ -397,15 +361,12 @@
       function show(n) {
         i = (n + slides.length) % slides.length;
         slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
-        const foot = slides[i].querySelector(".footnote span:last-child");
-        if (foot && !foot.classList.contains("nav-hint") && foot.textContent === "") {
-          foot.textContent = (i + 1) + " / " + slides.length;
-        } else {
-          slides.forEach((s, idx) => {
-            const f = s.querySelector(".footnote span:last-child");
-            if (f && !f.classList.contains("nav-hint")) f.textContent = (idx + 1) + " / " + slides.length;
-          });
-        }
+        slides.forEach((s, idx) => {
+          const f = s.querySelector(".footnote span:last-child");
+          if (f && !f.classList.contains("nav-hint")) {
+            f.textContent = (idx + 1) + " / " + slides.length;
+          }
+        });
         document.title = "AutoPing — " + (slides[i].dataset.title || "Prodotto");
       }
 
